@@ -47,14 +47,14 @@ def GCS_quiz():
         Verbal = random.randrange(1,6)
         Motor = random.randrange(1,7)
     
-        print(GCS.loc["Eyes", Eyes],",", GCS.loc["Verbal", Verbal],",", GCS.loc["Motor", Motor])
+        print(GCS.loc["Eyes", Eyes]+", "+ GCS.loc["Verbal", Verbal]+", "+ GCS.loc["Motor", Motor])
         score = get_input("Please enter GCS score: ")
         try:
             if int(score) == Eyes+Verbal+Motor: print("Correct!")
             else: print("Incorrect.")
         except ValueError: 
             print("Score must be an integer")
-        print("GCS score: ", Eyes, "+", Verbal,"+", Motor, "=", Eyes+Verbal+Motor)
+        print("GCS score: "+ str(Eyes)+ "+"+ str(Verbal)+"+"+str(Motor)+ "="+ str(Eyes+Verbal+Motor))
         quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
         
 def APGAR_quiz():
@@ -66,14 +66,14 @@ def APGAR_quiz():
         Ac = random.randrange(0,3)
         R = random.randrange(0,3)
         
-        print(APGAR.loc["Appearance", Ap],",", APGAR.loc["Pulse", P],",", APGAR.loc["Grimace",G], ",", APGAR.loc["Activity", Ac], ",", APGAR.loc["Respiration", R])
+        print(APGAR.loc["Appearance", Ap]+", "+ APGAR.loc["Pulse", P]+", "+ APGAR.loc["Grimace",G]+ ", "+ APGAR.loc["Activity", Ac]+ ", "+ APGAR.loc["Respiration", R])
         score = get_input("Please enter APGAR score: ")
         try:
             if int(score) == Ap+P+G+Ac+R: print("Correct!")
             else: print("Incorrect.")
         except ValueError: 
             print("Score must be an integer")
-        print("APGAR score: ", Ap, "+", P,"+",G,"+",Ac,"+",R, "=", Ap+P+G+Ac+R)
+        print("APGAR score: "+ str(Ap)+ "+"+str(P)+"+"+str(G)+"+"+str(Ac)+"+"+str(R)+ "=" + str(Ap+P+G+Ac+R))
         quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
         
 #The Rule of Nines quiz mechanism is a little messy. Allows for anterior, posterior or entire surface to be burned.
@@ -110,18 +110,18 @@ def nines_quiz():
                         else:
                             burn_score[part] = nines_peds[key]/2.0  
         if pedsvsadult: 
-            print("An adult has burned:", ", ".join(burned_surface))
+            print("An adult has burned: "+ ", ".join(burned_surface))
         else:
-            print("A child has burned:", ", ".join(burned_surface))
+            print("A child has burned: "+ ", ".join(burned_surface))
         score = get_input("Please enter the percentage of body burned: ")
         try:
             if float(score) == sum(burn_score.values()): print("Correct!")
             else: print("Incorrect")
         except ValueError:
             print("Burn percentage must be a number")
-        print("Percentage burned: ", sum(burn_score.values()))
+        print("Percentage burned: "+ str(sum(burn_score.values())))
         for k, v in burn_score.items():
-            print(k,":", v)
+            print(k+": "+ str(v))
         quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
 
 if __name__== "__main__":
