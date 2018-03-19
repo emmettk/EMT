@@ -13,6 +13,12 @@ Requires pandas (quiz info stored as pandas dataframe)
 import pandas as pd
 import random
 
+#Make compatible with python2
+try: 
+    get_input = raw_input
+except NameError: 
+    get_input = input
+
 #Quiz data
 GCS = pd.DataFrame( {1: ["Does not open eyes", "Makes no sounds", "Makes no movements"], 
                      2: ["Opens eyes in response to pain", "Incomprehensible sounds", "Extension to pain (decerebrate)"],
@@ -42,14 +48,14 @@ def GCS_quiz():
         Motor = random.randrange(1,7)
     
         print(GCS.loc["Eyes", Eyes],",", GCS.loc["Verbal", Verbal],",", GCS.loc["Motor", Motor])
-        score = input("Please enter GCS score: ")
+        score = get_input("Please enter GCS score: ")
         try:
             if int(score) == Eyes+Verbal+Motor: print("Correct!")
             else: print("Incorrect.")
         except ValueError: 
             print("Score must be an integer")
         print("GCS score: ", Eyes, "+", Verbal,"+", Motor, "=", Eyes+Verbal+Motor)
-        quizmode = input("Enter 'y' for another question, or anything else to exit. ")
+        quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
         
 def APGAR_quiz():
     quizmode = "y"
@@ -61,14 +67,14 @@ def APGAR_quiz():
         R = random.randrange(0,3)
         
         print(APGAR.loc["Appearance", Ap],",", APGAR.loc["Pulse", P],",", APGAR.loc["Grimace",G], ",", APGAR.loc["Activity", Ac], ",", APGAR.loc["Respiration", R])
-        score = input("Please enter APGAR score: ")
+        score = get_input("Please enter APGAR score: ")
         try:
             if int(score) == Ap+P+G+Ac+R: print("Correct!")
             else: print("Incorrect.")
         except ValueError: 
             print("Score must be an integer")
         print("APGAR score: ", Ap, "+", P,"+",G,"+",Ac,"+",R, "=", Ap+P+G+Ac+R)
-        quizmode = input("Enter 'y' for another question, or anything else to exit. ")
+        quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
         
 #The Rule of Nines quiz mechanism is a little messy. Allows for anterior, posterior or entire surface to be burned.
 def nines_quiz():
@@ -107,7 +113,7 @@ def nines_quiz():
             print("An adult has burned:", ", ".join(burned_surface))
         else:
             print("A child has burned:", ", ".join(burned_surface))
-        score = input("Please enter the percentage of body burned: ")
+        score = get_input("Please enter the percentage of body burned: ")
         try:
             if float(score) == sum(burn_score.values()): print("Correct!")
             else: print("Incorrect")
@@ -116,10 +122,10 @@ def nines_quiz():
         print("Percentage burned: ", sum(burn_score.values()))
         for k, v in burn_score.items():
             print(k,":", v)
-        quizmode = input("Enter 'y' for another question, or anything else to exit. ")
+        quizmode = get_input("Enter 'y' for another question, or anything else to exit. ")
 
 if __name__== "__main__":
-    quiz = input("Pick a quiz (GCS, APGAR, nines): ")
+    quiz = get_input("Pick a quiz (GCS, APGAR, nines): ")
     if quiz == "GCS":
         GCS_quiz()
     elif quiz == "APGAR":
