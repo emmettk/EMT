@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Thu Mar 15 10:48:16 2018
+Updated Feb 28 2023 for paramedic exam
 
 @author: E. Krupczak
 
@@ -36,7 +37,8 @@ APGAR = {"Appearance" : [("Blue or pale all over",0), ("Pink body; blue at extre
          "Respiration": [("No respirations",0), ("Weak/irregular/gasping respirations",1), ("Strong cry", 2)]}
 
 nines_adult = {"Head": 9, "Arm": 9, "Torso": 36, "Leg": 18, "Genitals": 1}
-nines_peds = {"Head": 18, "Arm": 9, "Torso": 36, "Leg": 14, "Genitals": 1}
+nines_infant = {"Head": 18, "Arm": 9, "Torso": 36, "Leg": 13.5, "Genitals": 1}
+nines_peds = {"Head": 12, "Arm": 9, "Torso": 36, "Leg": 16.5, "Genitals": 1}
 
 
 def quiz_mechanism(quiz_dict):
@@ -102,18 +104,23 @@ def nines_quiz():
                         else: #Anterior or posterior: half the area is burned
                             burn_score[part] = nines_dict[key]/2.0
             return burn_score
-        #Select pediatric or adult
-        pedsvsadult = random.randint(0,1) #0=peds, 1 = adult        
-        if pedsvsadult: #adult
+        #Select infant, pediatric or adult
+        pedsvsadult = random.randint(0,2) #0=infant, 1 = peds, 2 = adult        
+        if pedsvsadult == 2: #adult
             burn_score = get_burn_score(burned_surface, nines_adult)
-        else: #pediatric
+        elif pedsvsadult == 1: #pediatric
             burn_score = get_burn_score(burned_surface, nines_peds)
+	else: #infant
+		burn_score = get_burn_score(burned_surface, nines_infant)
         
         #Print the quiz
-        if pedsvsadult: 
+        if pedsvsadult == 2: #adult
             print("An adult has burned: "+ ", ".join(burned_surface))
-        else:
+        elif pedsvsadult == 1: #pediatric
             print("A child has burned: "+ ", ".join(burned_surface))
+	else: #infant
+		print("An infant has burned: "+", ".join(burned_surface))
+
         score = get_input("Please enter the percentage of body burned: ")
         try:
             if float(score) == sum(burn_score.values()): print("Correct!")
